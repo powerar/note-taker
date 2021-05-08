@@ -3,6 +3,7 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
+var notesArray = [];
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
@@ -70,7 +71,10 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
+    id: notesArray.length
   };
+  notesArray.push(newNote);
+  console.log(notesArray);
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();

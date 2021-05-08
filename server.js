@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
-const notes = require('./db/db.json');
+const db = require('./db/db.json');
 const fs = require('fs');
-const notesArray = [];
+const notes = [];
 
 const app = express();
 
@@ -21,15 +21,20 @@ app.get('/notes', (req, res) => {
   app.use(express.static('public'));
 });
 
-app.post('/api/notes', (req, res) => {
-  req.body.id = notes.length.toString();
-
-  const note = writeNote(req.body, notes);
+app.post('/api/notes', (req, res) => {  
+  const note = req.body;
+  writeNote(note);
 });
 
-function writeNote(note, notesArray) {
-  notes.push(note);
-  console.log(notes);
+function writeNote(note) {  
+  const content = fs.readFileSync('./db/db.json', 'utf-8');
+  const existingNote = JSON.parse(content);
+  note.id = existingNote.note.length + 1;
+  existingNote.note.push(note);
+  fs.writeFileSync(
+    path.join(__dirname, './db/db.json'),
+    JSON.stringify(existingNote, null, 2)
+  );
 };
 
 app.listen(PORT, () => {
