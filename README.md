@@ -5,7 +5,7 @@ A simple app to take notes.
 
 ## How to Use
 * Enter a note title and description
-* Click the "Save" icon on the type right
+* Click the "Save" icon on the top right of the page
 * Select a note from the left to view the description
 * Click + to add a new note
 
