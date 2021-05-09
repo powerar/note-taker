@@ -70,9 +70,7 @@ const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
     text: noteText.value,
-    id: notesArray.length
   };
-  notesArray.push(newNote);
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
@@ -120,9 +118,7 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-  debugger
   let jsonNotes = await notes.json();
-  console.log(jsonNotes);
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
@@ -162,9 +158,8 @@ const renderNoteList = async (notes) => {
     noteListItems.push(createLi('No saved Notes', false));
   }
 
-  jsonNotes.note.forEach((note) => {
+  jsonNotes.forEach((note) => {
     const li = createLi(note.title);
-    console.log(li);
     li.dataset.note = JSON.stringify(note);
 
     noteListItems.push(li);
